@@ -1,0 +1,7 @@
+{
+  "name": "socket-repl",
+  "description": "A JavaScript REPL interface for the Socket Runtime",
+  "license": "Apache-2.0",
+  "main": "ipc.js",
+  "private": true
+}

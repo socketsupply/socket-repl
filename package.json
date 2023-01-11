@@ -1,0 +1,41 @@
+{
+  "name": "@socketsupply/socket-repl",
+  "version": "0.0.1",
+  "description": "A JavaScript REPL interface for the Socket Runtime",
+  "main": "src/index.js",
+  "type": "module",
+  "bin": {
+    "socket-repl": "bin/socket-repl.js"
+  },
+  "scripts": {
+    "pretest": "standard .",
+    "test": "ssc build -o",
+    "lint": "standard -v",
+    "postpublish": "npm publish --registry https://npm.pkg.github.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/socketsupply/socket-repl.git"
+  },
+  "keywords": [
+    "socket",
+    "runtime",
+    "api",
+    "repl"
+  ],
+  "author": "Joseph Werle <joseph@socketsupply.co>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/socketsupply/socket-repl/issues"
+  },
+  "homepage": "https://github.com/socketsupply/socket-repl#readme",
+  "dependencies": {
+    "@socketsupply/socket-api": "^0.2.8",
+    "acorn": "^8.8.1",
+    "acorn-walk": "^8.2.0",
+    "esbuild": "^0.16.16"
+  },
+  "devDependencies": {
+    "standard": "^17.0.0"
+  }
+}
