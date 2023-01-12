@@ -11,6 +11,7 @@
     "pretest": "standard .",
     "test": "ssc build -o",
     "lint": "standard -v",
+    "build": "ssc build -o --prod",
     "postpublish": "npm publish --registry https://npm.pkg.github.com"
   },
   "repository": {

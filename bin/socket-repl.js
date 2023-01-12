@@ -11,7 +11,6 @@ import { Message } from '@socketsupply/socket-api/ipc.js'
 import socket from '@socketsupply/socket-api/index.js'
 
 const HISTORY_PATH = path.join(os.homedir(), '.socket_repl_history')
-const VERBOSE = Boolean(process.env.VERBOSE || process.argv.includes('--verbose'))
 const DEBUG = Boolean(process.env.DEBUG || process.argv.includes('--debug'))
 
 const callbacks = {}
@@ -19,7 +18,7 @@ const dirname = path.dirname(import.meta.url.replace('file://', ''))
 
 const restArgsIndex = process.argv.indexOf('--') + 1
 const restArgs = restArgsIndex > 0 ? process.argv.slice(restArgsIndex) : []
-const args = ['build', '-r', '-o']
+const args = ['run']
 const cwd = process.cwd()
 
 if (restArgsIndex > 0) {
@@ -28,9 +27,6 @@ if (restArgsIndex > 0) {
 
 if (!DEBUG) {
   args.push('--prod', '--headless')
-  if (!VERBOSE) {
-    args.push('--quiet')
-  }
 }
 
 args.push(...restArgs)
@@ -41,7 +37,7 @@ for (let i = 0; i < argv.length; ++i) {
   const arg = argv[i] || ''
   const next = argv[i + 1] || ''
   if (arg === '-h' || arg === '--help') {
-    console.log('usage: socket-repl [-h|--help] [--debug|--versbose] ...[-i <import> | --import <import>]')
+    console.log('usage: socket-repl [-h|--help] [--debug] ...[-i <import> | --import <import>]')
     process.exit(0)
   } else if (arg === '-i' || arg === '--import') {
     imports.push(path.resolve(cwd, next))
@@ -57,11 +53,9 @@ const builddir = execSync('ssc print-build-dir', { cwd: path.resolve(dirname, '.
   .replace(/^"/, '')
   .replace(/"$/, '')
 
-const controller = new AbortController()
 const child = spawn('ssc', args, {
   cwd: path.resolve(dirname, '..'),
   stdio: ['ignore', 'pipe', 'inherit'],
-  signal: controller.signal,
   env: {
     SOCKET_REPL_ADDITIONAL_SOURCES: imports.join(' '),
     SOCKET_REPL_IMPORTED_SOURCES: imports
