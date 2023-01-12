@@ -11,8 +11,7 @@
     "pretest": "standard .",
     "test": "ssc build -o",
     "lint": "standard -v",
-    "postpublish": "npm publish --registry https://npm.pkg.github.com",
-    "start": "./bin/socket-repl.js"
+    "postpublish": "npm publish --registry https://npm.pkg.github.com"
   },
   "repository": {
     "type": "git",
