@@ -17,12 +17,6 @@ const DEBUG = Boolean(process.env.DEBUG || process.argv.includes('--debug'))
 const callbacks = {}
 const dirname = path.dirname(import.meta.url.replace('file://', ''))
 
-const builddir = execSync('ssc print-build-dir', { cwd: path.resolve(dirname, '..') })
-  .toString()
-  .trim()
-  .replace(/^"/, '')
-  .replace(/"$/, '')
-
 const restArgsIndex = process.argv.indexOf('--') + 1
 const restArgs = restArgsIndex > 0 ? process.argv.slice(restArgsIndex) : []
 const args = ['build', '-r', '-o']
@@ -41,10 +35,27 @@ if (!DEBUG) {
 
 args.push(...restArgs)
 
+const imports = []
+const argv = process.argv.slice(2)
+for (let i = 0; i < argv.length; ++i) {
+  const arg = argv[i] || ''
+  const next = argv[i + 1] || ''
+  if (arg === '-h' || arg === '--help') {
+    console.log('usage: socket-repl [-h|--help] [--debug|--versbose] ...[-i <import> | --import <import>]')
+    process.exit(0)
+  } else if (arg === '-i' || arg === '--import') {
+    imports.push(path.resolve(cwd, next))
+  } else if (arg.startsWith('--import=')) {
+    const value = arg.split('=')[1]
+    imports.push(path.resolve(cwd, value))
+  }
+}
 
-const imports = process.argv.slice(2)
-  .filter((arg) => !arg.startsWith('-'))
-  .map((arg) => path.resolve(cwd, arg))
+const builddir = execSync('ssc print-build-dir', { cwd: path.resolve(dirname, '..') })
+  .toString()
+  .trim()
+  .replace(/^"/, '')
+  .replace(/"$/, '')
 
 const controller = new AbortController()
 const child = spawn('ssc', args, {
