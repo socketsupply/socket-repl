@@ -36,7 +36,6 @@
     "esbuild": "^0.16.16"
   },
   "devDependencies": {
-    "pkg": "^5.8.0",
     "standard": "^17.0.0"
   }
 }
