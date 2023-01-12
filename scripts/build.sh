@@ -51,9 +51,9 @@ function main () {
     esbuild "$file" "${esbuild_flags[@]}" --outfile="$tmpfile" || return $?
 
     if [[ " $* " =~ " --debug=1 " ]]; then
-      pkg "$tmpfile" -o "$outfile" || return $?
+      pkg -t node16 "$tmpfile" -o "$outfile" || return $?
     else
-      pkg "$tmpfile" --compress GZip -o "$outfile" >/dev/null || return $?
+      pkg -t node16 "$tmpfile" --compress GZip -o "$outfile" >/dev/null || return $?
     fi
 
     rm -f "$tmpfile" || return $?
