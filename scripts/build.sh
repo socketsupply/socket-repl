@@ -8,6 +8,7 @@ function main () {
   local copy_sources=(
     src/package.json
     src/index.html
+    src/icon.png
     LICENSE
   )
 
