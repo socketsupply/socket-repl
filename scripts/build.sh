@@ -43,8 +43,19 @@ function main () {
   ## Build Node runtime sources
   esbuild_flags+=(--platform=node)
   for file in "${node_sources[@]}"; do
-    local outfile="$target/$(basename "$file")"
-    esbuild "$file" "${esbuild_flags[@]}" --outfile="$outfile" || return $?
+    local basename="$(basename "$file")"
+    local tmpfile="$target/$basename"
+    local outfile="$target/socket-repl-${basename/.js/}"
+
+    esbuild "$file" "${esbuild_flags[@]}" --outfile="$tmpfile" || return $?
+
+    if [[ " $* " =~ " --debug=1 " ]]; then
+      pkg "$tmpfile" -o "$outfile" || return $?
+    else
+      pkg "$tmpfile" --compress GZip -o "$outfile" >/dev/null || return $?
+    fi
+
+    rm -f "$tmpfile" || return $?
   done
 
   return 0

@@ -11,7 +11,8 @@
     "pretest": "standard .",
     "test": "ssc build -o",
     "lint": "standard -v",
-    "postpublish": "npm publish --registry https://npm.pkg.github.com"
+    "postpublish": "npm publish --registry https://npm.pkg.github.com",
+    "start": "./bin/socket-repl.js"
   },
   "repository": {
     "type": "git",
@@ -36,6 +37,7 @@
     "esbuild": "^0.16.16"
   },
   "devDependencies": {
+    "pkg": "^5.8.0",
     "standard": "^17.0.0"
   }
 }
