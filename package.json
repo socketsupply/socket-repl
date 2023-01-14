@@ -12,7 +12,8 @@
     "test": "ssc build -o",
     "lint": "standard -v",
     "build": "ssc build -o --prod",
-    "install": "ssc build -o --prod"
+    "install": "ssc build -o --prod",
+    "version": "scripts/update-socket-ini-version-from-package-json.sh"
   },
   "repository": {
     "type": "git",
