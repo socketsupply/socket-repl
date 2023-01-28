@@ -1,12 +1,17 @@
-import console from '@socketsupply/socket-api/console.js'
-import socket from '@socketsupply/socket-api/index.js'
-import ipc from '@socketsupply/socket-api/ipc.js'
+import process from 'socket:process'
+import console from 'socket:console'
+import backend from 'socket:backend'
+import util from 'socket:util'
+import path from 'socket:path'
+import ipc from 'socket:ipc'
+
+import socket from 'socket:index'
 
 let didInit = false
 
 const AsyncFunction = (async () => undefined).constructor
 
-socket.backend.open({ force: true }).then(() => {
+backend.open({ force: true }).then(() => {
   setTimeout(() => {
     ipc.send('process.write', {
       value: ipc.Message.from('repl.context.ready').toString()
@@ -24,13 +29,13 @@ window.addEventListener('error', onerror)
 window.addEventListener('unhandledrejection', onerror)
 
 // uncomment below to get IPC debug output in stdout
-if (socket.process.env.DEBUG) {
+if (process.env.DEBUG) {
   ipc.debug.enabled = true
   ipc.debug.log = (...args) => console.log(...args)
 }
 
 function onerror (err) {
-  if (socket.process.env.DEBUG) {
+  if (process.env.DEBUG) {
     console.error(makeError(err))
   }
 }
@@ -91,10 +96,10 @@ export async function init (opts) {
     ipc.send('exit')
   })
 
-  const additionals = (socket.process.env.SOCKET_REPL_IMPORTED_SOURCES || '')
+  const additionals = (process.env.SOCKET_REPL_IMPORTED_SOURCES || '')
     .split(';')
     .filter(Boolean)
-    .map((filename) => filename.split(socket.path.sep).slice(-1)[0])
+    .map((filename) => filename.split(path.sep).slice(-1)[0])
 
   for (const additional of additionals) {
     const script = window.document.createElement('script')
@@ -144,7 +149,7 @@ function makeError (err) {
 function encode (data, err) {
   return JSON.stringify({
     // double encode to prevent JSON text from causing decodeURIComponent issues
-    data: encodeURIComponent(encodeURIComponent(socket.util.format(data))),
+    data: encodeURIComponent(encodeURIComponent(util.format(data))),
     err: err || null
   })
 }
@@ -183,7 +188,7 @@ export async function evaluate ({ cmd, id }) {
 
     const result = await ipc.request('window.eval', { value: cmd })
     const parts = []
-    const data = socket.util.format(!result.data?.status ? result.data : null)
+    const data = util.format(!result.data?.status ? result.data : null)
     const err = makeError(result.err)
     const max = 1024
 
