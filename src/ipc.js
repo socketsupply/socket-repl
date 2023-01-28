@@ -1,5 +1,5 @@
 import { createServer } from 'net'
-import { Message } from '@socketsupply/socket-api/ipc.js'
+import { Message } from '@socketsupply/socket/ipc.js'
 import { format } from 'util'
 
 const ipc = {
