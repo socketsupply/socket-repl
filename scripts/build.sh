@@ -38,7 +38,7 @@ function main () {
   for file in "${socket_sources[@]}"; do
     if ! [ -f "$file" ]; then continue; fi
     local outfile="$target/$(basename "$file")"
-    esbuild "$file" "${esbuild_flags[@]}" --outfile="$outfile" || return $?
+    cp "$file" "$outfile"
   done
 
   ## Build Node runtime sources
