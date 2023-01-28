@@ -7,8 +7,8 @@ import { spawn, execSync } from 'node:child_process'
 import path from 'node:path'
 import os from 'node:os'
 
-import { Message } from '@socketsupply/socket-api/ipc.js'
-import socket from '@socketsupply/socket-api/index.js'
+import { Message } from '@socketsupply/socket/ipc.js'
+import socket from '@socketsupply/socket/index.js'
 
 const HISTORY_PATH = path.join(os.homedir(), '.socket_repl_history')
 const DEBUG = Boolean(process.env.DEBUG || process.argv.includes('--debug'))
