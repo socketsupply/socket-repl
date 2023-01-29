@@ -158,7 +158,7 @@ export async function evaluate ({ cmd, id }) {
   try { cmd = decodeURIComponent(cmd) } catch (err) {}
 
   try {
-    if (/\s*await/.test(cmd)) {
+    if (/\s*await/.test(cmd) && !/^\s*(const|var|let)/.test(cmd)) {
       const value = await new AsyncFunction(`return (${cmd})`)()
       return await send('repl.eval.result', {
         id,
