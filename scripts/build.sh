@@ -14,6 +14,7 @@ function main () {
 
   local esbuild_flags=(
     --tree-shaking=true
+    --external:socket:*
     --keep-names
     --format=esm
     --bundle
