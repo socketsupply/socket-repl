@@ -15,6 +15,7 @@ function main () {
   local esbuild_flags=(
     --tree-shaking=true
     --keep-names
+    --format=esm
     --bundle
   )
 
