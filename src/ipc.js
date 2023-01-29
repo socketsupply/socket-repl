@@ -1,6 +1,6 @@
-import { createServer } from 'net'
-import { Message } from '@socketsupply/socket/ipc.js'
-import { format } from 'util'
+import { createServer } from 'node:net'
+import { Message } from 'socket:ipc'
+import { format } from 'node:util'
 
 const ipc = {
   seq: 0,
