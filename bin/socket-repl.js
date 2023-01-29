@@ -1,14 +1,15 @@
 #!/usr/bin/env node --experimental-loader @socketsupply/socket/node-esm-loader.js
 
 import { Recoverable, REPLServer } from 'node:repl'
-import { createConnection } from 'net'
-import * as acorn from 'acorn'
+import { createConnection } from 'node:net'
 import { spawn, execSync } from 'node:child_process'
 import path from 'node:path'
 import os from 'node:os'
 
 import { Message } from 'socket:ipc'
 import socket from 'socket:index'
+
+import * as acorn from 'acorn'
 
 const HISTORY_PATH = path.join(os.homedir(), '.socket_repl_history')
 const DEBUG = Boolean(process.env.DEBUG || process.argv.includes('--debug'))
