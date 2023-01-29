@@ -12,7 +12,7 @@
     "test": "ssc build -o",
     "lint": "standard -v",
     "build": "ssc build -o --prod",
-    "install": "ssc build -o --prod",
+    "postinstall": "npm rebuild @socketsupply/socket && ssc build -o --prod",
     "version": "scripts/update-socket-ini-version-from-package-json.sh"
   },
   "repository": {
@@ -32,7 +32,7 @@
   },
   "homepage": "https://github.com/socketsupply/socket-repl#readme",
   "dependencies": {
-    "@socketsupply/socket": "^0.0.2",
+    "@socketsupply/socket": "^0.0.21",
     "acorn": "^8.8.1",
     "acorn-walk": "^8.2.0",
     "esbuild": "^0.16.16"
