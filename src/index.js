@@ -99,14 +99,9 @@ export async function init (opts) {
   const additionals = (process.env.SOCKET_REPL_IMPORTED_SOURCES || '')
     .split(';')
     .filter(Boolean)
-    .map((filename) => filename.split(path.sep).slice(-1)[0])
 
   for (const additional of additionals) {
-    const script = window.document.createElement('script')
-    script.src = additional
-    script.type = 'module'
-    script.onerror = (e) => console.log(makeError(e))
-    setTimeout(() => window.document.head.appendChild(script), 0)
+    await import (`file://${additional}`)
   }
 }
 
