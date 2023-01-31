@@ -4,6 +4,7 @@
 import { Recoverable, REPLServer } from 'node:repl'
 import { createConnection } from 'node:net'
 import { spawn, execSync } from 'node:child_process'
+import Module from 'node:module'
 import path from 'node:path'
 import os from 'node:os'
 
@@ -11,6 +12,8 @@ import { Message } from 'socket:ipc'
 import socket from 'socket:index'
 
 import * as acorn from 'acorn'
+
+const require = Module.createRequire(import.meta.url)
 
 const HISTORY_PATH = path.join(os.homedir(), '.socket_repl_history')
 const DEBUG = Boolean(process.env.DEBUG || process.argv.includes('--debug'))
@@ -49,13 +52,15 @@ for (let i = 0; i < argv.length; ++i) {
   }
 }
 
-const builddir = execSync('ssc print-build-dir', { cwd: path.resolve(dirname, '..') })
+const ssc = require.resolve('@socketsupply/socket/bin/ssc.js')
+
+const builddir = execSync(`${ssc} print-build-dir`, { cwd: path.resolve(dirname, '..') })
   .toString()
   .trim()
   .replace(/^"/, '')
   .replace(/"$/, '')
 
-const child = spawn('ssc', args, {
+const child = spawn(ssc, args, {
   cwd: path.resolve(dirname, '..'),
   stdio: ['ignore', 'pipe', 'inherit'],
   env: {
