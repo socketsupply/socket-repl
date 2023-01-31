@@ -64,11 +64,7 @@ const child = spawn(ssc, args, {
   cwd: path.resolve(dirname, '..'),
   stdio: ['ignore', 'pipe', 'inherit'],
   env: {
-    SOCKET_REPL_ADDITIONAL_SOURCES: imports.join(' '),
-    SOCKET_REPL_IMPORTED_SOURCES: imports
-      .map((filename) => path.basename(filename))
-      .join(';'),
-
+    SOCKET_REPL_IMPORTED_SOURCES: imports.join(';'),
     ...process.env
   }
 })
