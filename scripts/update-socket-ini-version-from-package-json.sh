@@ -4,5 +4,7 @@ declare version=""
 
 version="$(node -pe "require('./package.json').version")"
 
-sed -i "s/version\s*=\s*.*/version = $version/g" socket.ini || exit $?
+rm -f socket.ini.tmp
+cat socket.ini | sed "s/version *= *.*/version = $version/g" > socket.ini.tmp
+mv -f socket.ini.tmp socket.ini
 git add socket.ini || exit $?
