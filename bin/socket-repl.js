@@ -1,4 +1,5 @@
-#!/usr/bin/env node --experimental-loader @socketsupply/socket/node-esm-loader.js
+#!/bin/sh
+":" //# ; exec /usr/bin/env node --experimental-loader @socketsupply/socket/node-esm-loader.js "$0" "$@"
 
 import { Recoverable, REPLServer } from 'node:repl'
 import { createConnection } from 'node:net'
