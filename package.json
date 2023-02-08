@@ -1,6 +1,6 @@
 {
   "name": "@socketsupply/socket-repl",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "A JavaScript REPL interface for the Socket Runtime",
   "main": "src/index.js",
   "type": "module",
