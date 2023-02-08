@@ -1,5 +1,4 @@
-#!/bin/sh
-":" //# ; exec /usr/bin/env node --experimental-loader @socketsupply/socket/node-esm-loader.js "$0" "$@"
+#!/usr/bin/env node
 
 import { Recoverable, REPLServer } from 'node:repl'
 import { createConnection } from 'node:net'
@@ -8,8 +7,8 @@ import Module from 'node:module'
 import path from 'node:path'
 import os from 'node:os'
 
-import { Message } from 'socket:ipc'
-import socket from 'socket:index'
+import { Message } from '@socketsupply/socket/ipc.js'
+import socket from '@socketsupply/socket/index.js'
 
 import * as acorn from 'acorn'
 
